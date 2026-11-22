@@ -1,0 +1,14 @@
+task1_iris_classification/
+task2_housing_regression/
+task3_churn_classifier/
+task4_nlp_sentiment/
+requirements-dev.txt
+*.ipynb
+*.png
+*.jpg
+*.jpeg
+*.csv
+.git
+.gitignore
+README.md
+__pycache__/
