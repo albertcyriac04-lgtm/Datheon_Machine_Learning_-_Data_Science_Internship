@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ML Project Demos — Datheon Internship</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased min-h-screen flex flex-col">
+
+  <!-- Navbar -->
+  <header class="bg-white border-b border-gray-200">
+    <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div>
+        <h1 class="text-base font-semibold text-gray-900">Datheon ML & Data Science Internship</h1>
+        <p class="text-xs text-gray-500">Project Deliverables & Model Demos</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="https://github.com/albertcyriac04-lgtm/Datheon_Machine_Learning_-_Data_Science_Internship" target="_blank" class="text-xs px-3 py-1.5 rounded bg-gray-900 text-white hover:bg-gray-800 transition">GitHub Repo</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-5xl mx-auto px-4 py-8 flex-1 w-full">
+    
+    <!-- Intro -->
+    <div class="mb-8">
+      <h2 class="text-2xl font-bold text-gray-900">Model Inference Demonstrations</h2>
+      <p class="text-sm text-gray-600 mt-1">
+        This app serves predictions from models trained in the accompanying Jupyter notebooks and saved as pickle files. Choose any task below to test with sample or custom values.
+      </p>
+    </div>
+
+    <!-- Task Navigation Tabs -->
+    <div class="flex border-b border-gray-200 mb-6 gap-2 overflow-x-auto text-sm font-medium">
+      <button onclick="switchTab('iris')" id="tab-iris" class="tab-btn px-4 py-2 border-b-2 border-blue-600 text-blue-600 font-semibold focus:outline-none">1. Iris Classification</button>
+      <button onclick="switchTab('housing')" id="tab-housing" class="tab-btn px-4 py-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700 focus:outline-none">2. Housing Price</button>
+      <button onclick="switchTab('churn')" id="tab-churn" class="tab-btn px-4 py-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700 focus:outline-none">3. Customer Churn</button>
+      <button onclick="switchTab('sentiment')" id="tab-sentiment" class="tab-btn px-4 py-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700 focus:outline-none">4. Sentiment Analysis</button>
+    </div>
+
+    <!-- ── TAB 1: IRIS ── -->
+    <section id="panel-iris" class="tab-panel bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+      <div class="border-b border-gray-100 pb-4 mb-5">
+        <h3 class="text-lg font-semibold text-gray-900">Task 1: Iris Flower Classification</h3>
+        <p class="text-xs text-gray-500 mt-0.5">Multi-class classification pipeline using StandardScaler and Logistic Regression. Model loaded from <code class="bg-gray-100 px-1 py-0.5 rounded text-gray-700">models/iris_model.pkl</code>.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-medium text-gray-700 mb-1">Sepal Length (cm)</label>
+              <input id="i-sl" type="number" step="0.1" value="5.1" class="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500 outline-none">
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-gray-700 mb-1">Sepal Width (cm)</label>
+              <input id="i-sw" type="number" step="0.1" value="3.5" class="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500 outline-none">
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-gray-700 mb-1">Petal Length (cm)</label>
+              <input id="i-pl" type="number" step="0.1" value="1.4" class="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500 outline-none">
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-gray-700 mb-1">Petal Width (cm)</label>
+              <input id="i-pw" type="number" step="0.1" value="0.2" class="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500 outline-none">
+            </div>
+          </div>
+
+          <div class="mt-4 flex gap-2">
+            <button onclick="setIris(5.1, 3.5, 1.4, 0.2)" class="text-xs text-gray-600 bg-gray-100 hover:bg-gray-200 px-2.5 py-1 rounded">Setosa sample</button>
+            <button onclick="setIris(6.0, 2.7, 4.2, 1.3)" class="text-xs text-gray-600 bg-gray-100 hover:bg-gray-200 px-2.5 py-1 rounded">Versicolor sample</button>
+            <button onclick="setIris(6.7, 3.0, 5.2, 2.3)" class="text-xs text-gray-600 bg-gray-100 hover:bg-gray-200 px-2.5 py-1 rounded">Virginica sample</button>
+          </div>
+
+          <button onclick="predictIris()" class="mt-5 w-full bg-blue-600 text-white text-sm font-medium py-2 px-4 rounded hover:bg-blue-700 transition">
+            Run Prediction
+          </button>
+        </div>
+
+        <div class="bg-gray-50 border border-gray-200 rounded p-4 flex flex-col justify-center">
+          <div id="result-iris-empty" class="text-center text-sm text-gray-400 py-8">
+            Click "Run Prediction" to view output.
+          </div>
+          <div id="result-iris" class="hidden">
+            <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider block mb-1">Predicted Species</span>
+            <div id="out-iris-label" class="text-2xl font-bold text-gray-900 capitalize mb-3"></div>
+            <div class="text-xs text-gray-600 mb-4" id="out-iris-conf"></div>
+            <div class="space-y-2 border-t border-gray-200 pt-3" id="out-iris-bars"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── TAB 2: HOUSING ── -->
+    <section id="panel-housing" class="tab-panel hidden bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+      <div class="border-b border-gray-100 pb-4 mb-5">
+        <h3 class="text-lg font-semibold text-gray-900">Task 2: California Housing Price Prediction</h3>
+        <p class="text-xs text-gray-500 mt-0.5">Continuous regression model predicting median house values based on census attributes. Model loaded from <code class="bg-gray-100 px-1 py-0.5 rounded text-gray-700">models/housing_model.pkl</code>.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-medium text-gray-700 mb-1">Median Income (in $10k)</label>
+              <input id="h-inc" type="number" step="0.1" value="5.2" class="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500 outline-none">
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-gray-700 mb-1">Median House Age (years)</label>
+              <input id="h-age" type="number" step="1" value="28" class="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500 outline-none">
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-gray-700 mb-1">Total Rooms in Block</label>
+              <input id="h-rooms" type="number" step="10" value="2800" class="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500 outline-none">
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-gray-700 mb-1">Households</label>
+              <input id="h-hh" type="number" step="10" value="520" class="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500 outline-none">
+            </div>
+          </div>
+
+          <button onclick="predictHousing()" class="mt-5 w-full bg-blue-600 text-white text-sm font-medium py-2 px-4 rounded hover:bg-blue-700 transition">
+            Calculate Estimate
+          </button>
+        </div>
+
+        <div class="bg-gray-50 border border-gray-200 rounded p-4 flex flex-col justify-center">
+          <div id="result-housing-empty" class="text-center text-sm text-gray-400 py-8">
+            Click "Calculate Estimate" to predict price.
+          </div>
+          <div id="result-housing" class="hidden">
+            <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider block mb-1">Estimated Median Value</span>
+            <div id="out-housing-val" class="text-3xl font-bold text-gray-900 mb-2"></div>
+            <p class="text-xs text-gray-500 leading-relaxed">
+              Calculated using regularized regression coefficients with engineered features (rooms per household & bedrooms ratio).
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── TAB 3: CHURN ── -->
+    <section id="panel-churn" class="tab-panel hidden bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+      <div class="border-b border-gray-100 pb-4 mb-5">
+        <h3 class="text-lg font-semibold text-gray-900">Task 3: Telecom Customer Churn Prediction</h3>
+        <p class="text-xs text-gray-500 mt-0.5">Ensemble classification identifying customers likely to cancel subscription. Model loaded from <code class="bg-gray-100 px-1 py-0.5 rounded text-gray-700">models/churn_model.pkl</code>.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <div class="grid grid-cols-2 gap-4 mb-3">
+            <div>
+              <label class="block text-xs font-medium text-gray-700 mb-1">Account Tenure (months)</label>
+              <input id="c-tenure" type="number" min="1" max="72" value="6" class="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500 outline-none">
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-gray-700 mb-1">Monthly Charges ($)</label>
+              <input id="c-charges" type="number" step="0.5" value="85.5" class="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500 outline-none">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-3 gap-3">
+            <div>
+              <label class="block text-xs font-medium text-gray-700 mb-1">Contract</label>
+              <select id="c-contract" class="w-full px-2 py-2 border border-gray-300 rounded text-xs focus:ring-1 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                <option value="Month-to-month" selected>Month-to-month</option>
+                <option value="One year">One year</option>
+                <option value="Two year">Two year</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-gray-700 mb-1">Internet Service</label>
+              <select id="c-internet" class="w-full px-2 py-2 border border-gray-300 rounded text-xs focus:ring-1 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                <option value="Fiber optic" selected>Fiber optic</option>
+                <option value="DSL">DSL</option>
+                <option value="No">No service</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-gray-700 mb-1">Tech Support</label>
+              <select id="c-support" class="w-full px-2 py-2 border border-gray-300 rounded text-xs focus:ring-1 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                <option value="No" selected>No</option>
+                <option value="Yes">Yes</option>
+              </select>
+            </div>
+          </div>
+
+          <button onclick="predictChurn()" class="mt-5 w-full bg-blue-600 text-white text-sm font-medium py-2 px-4 rounded hover:bg-blue-700 transition">
+            Evaluate Attrition Risk
+          </button>
+        </div>
+
+        <div class="bg-gray-50 border border-gray-200 rounded p-4 flex flex-col justify-center">
+          <div id="result-churn-empty" class="text-center text-sm text-gray-400 py-8">
+            Click "Evaluate Attrition Risk" to assess customer.
+          </div>
+          <div id="result-churn" class="hidden">
+            <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider block mb-1">Assessment Outcome</span>
+            <div id="out-churn-status" class="text-2xl font-bold mb-2"></div>
+            <div class="text-xs text-gray-600 mb-3" id="out-churn-prob"></div>
+            <div class="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+              <div id="out-churn-bar" class="h-2 rounded-full" style="width: 0%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── TAB 4: SENTIMENT ── -->
+    <section id="panel-sentiment" class="tab-panel hidden bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+      <div class="border-b border-gray-100 pb-4 mb-5">
+        <h3 class="text-lg font-semibold text-gray-900">Task 4: Customer Review Sentiment Classifier</h3>
+        <p class="text-xs text-gray-500 mt-0.5">TF-IDF vectorizer paired with Naive Bayes trained on customer reviews. Model loaded from <code class="bg-gray-100 px-1 py-0.5 rounded text-gray-700">models/sentiment_model.pkl</code>.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label class="block text-xs font-medium text-gray-700 mb-1">Review Text</label>
+          <textarea id="i-review" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500 outline-none" placeholder="Enter text to classify..."></textarea>
+
+          <div class="flex gap-2 mt-2">
+            <button onclick="setReview('The product quality is exceptional, exceeded all my expectations!')" class="text-xs text-gray-600 bg-gray-100 hover:bg-gray-200 px-2 py-1 rounded">Positive sample</button>
+            <button onclick="setReview('Terrible customer service and the item arrived completely damaged.')" class="text-xs text-gray-600 bg-gray-100 hover:bg-gray-200 px-2 py-1 rounded">Negative sample</button>
+            <button onclick="setReview('Average performance, decent for the price point but nothing special.')" class="text-xs text-gray-600 bg-gray-100 hover:bg-gray-200 px-2 py-1 rounded">Neutral sample</button>
+          </div>
+
+          <button onclick="predictSentiment()" class="mt-4 w-full bg-blue-600 text-white text-sm font-medium py-2 px-4 rounded hover:bg-blue-700 transition">
+            Classify Sentiment
+          </button>
+        </div>
+
+        <div class="bg-gray-50 border border-gray-200 rounded p-4 flex flex-col justify-center">
+          <div id="result-sent-empty" class="text-center text-sm text-gray-400 py-8">
+            Click "Classify Sentiment" to inspect polarity.
+          </div>
+          <div id="result-sent" class="hidden">
+            <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider block mb-1">Detected Sentiment</span>
+            <div id="out-sent-label" class="text-2xl font-bold capitalize mb-2"></div>
+            <div class="text-xs text-gray-600 mb-3" id="out-sent-conf"></div>
+            <div class="space-y-1.5 border-t border-gray-200 pt-3" id="out-sent-probs"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-gray-200 py-4 text-center text-xs text-gray-500">
+    <div class="max-w-5xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-2">
+      <span>Datheon Machine Learning & Data Science Internship Submission</span>
+      <span>Scikit-Learn · Pandas · Flask · Python</span>
+    </div>
+  </footer>
+
+  <script>
+    // Tab switching
+    function switchTab(name) {
+      document.querySelectorAll('.tab-panel').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(el => {
+        el.classList.remove('border-blue-600', 'text-blue-600');
+        el.classList.add('border-transparent', 'text-gray-500');
+      });
+      document.getElementById('panel-' + name).classList.remove('hidden');
+      const btn = document.getElementById('tab-' + name);
+      btn.classList.remove('border-transparent', 'text-gray-500');
+      btn.classList.add('border-blue-600', 'text-blue-600');
+    }
+
+    // Task 1: Iris
+    function setIris(sl, sw, pl, pw) {
+      document.getElementById('i-sl').value = sl;
+      document.getElementById('i-sw').value = sw;
+      document.getElementById('i-pl').value = pl;
+      document.getElementById('i-pw').value = pw;
+    }
+
+    async function predictIris() {
+      const payload = {
+        sepal_length: document.getElementById('i-sl').value,
+        sepal_width: document.getElementById('i-sw').value,
+        petal_length: document.getElementById('i-pl').value,
+        petal_width: document.getElementById('i-pw').value
+      };
+      try {
+        const res = await fetch('/predict/iris', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        document.getElementById('result-iris-empty').classList.add('hidden');
+        document.getElementById('result-iris').classList.remove('hidden');
+
+        document.getElementById('out-iris-label').textContent = data.prediction;
+        document.getElementById('out-iris-conf').textContent = `Confidence: ${(data.confidence * 100).toFixed(1)}%`;
+
+        let bars = '';
+        for (const [cls, prob] of Object.entries(data.probabilities || {})) {
+          const pct = (prob * 100).toFixed(1);
+          bars += `
+            <div class="text-xs">
+              <div class="flex justify-between text-gray-600 mb-0.5 capitalize"><span>${cls}</span><span>${pct}%</span></div>
+              <div class="w-full bg-gray-200 rounded-full h-1.5"><div class="bg-blue-600 h-1.5 rounded-full" style="width: ${pct}%"></div></div>
+            </div>`;
+        }
+        document.getElementById('out-iris-bars').innerHTML = bars;
+      } catch (err) {
+        alert('Request failed: ' + err.message);
+      }
+    }
+
+    // Task 2: Housing
+    async function predictHousing() {
+      const payload = {
+        median_income: document.getElementById('h-inc').value,
+        housing_median_age: document.getElementById('h-age').value,
+        total_rooms: document.getElementById('h-rooms').value,
+        households: document.getElementById('h-hh').value
+      };
+      try {
+        const res = await fetch('/predict/housing', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        document.getElementById('result-housing-empty').classList.add('hidden');
+        document.getElementById('result-housing').classList.remove('hidden');
+        document.getElementById('out-housing-val').textContent = data.formatted || `$${Number(data.prediction_usd).toLocaleString()}`;
+      } catch (err) {
+        alert('Request failed: ' + err.message);
+      }
+    }
+
+    // Task 3: Churn
+    async function predictChurn() {
+      const payload = {
+        tenure: document.getElementById('c-tenure').value,
+        monthly_charges: document.getElementById('c-charges').value,
+        contract: document.getElementById('c-contract').value,
+        internet_service: document.getElementById('c-internet').value,
+        tech_support: document.getElementById('c-support').value
+      };
+      try {
+        const res = await fetch('/predict/churn', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        document.getElementById('result-churn-empty').classList.add('hidden');
+        document.getElementById('result-churn').classList.remove('hidden');
+
+        const isChurn = data.prediction === 'Churn';
+        const labelEl = document.getElementById('out-churn-status');
+        labelEl.textContent = isChurn ? 'High Churn Risk' : 'Low Churn Risk';
+        labelEl.className = 'text-2xl font-bold mb-2 ' + (isChurn ? 'text-red-600' : 'text-green-600');
+
+        const riskPct = (data.churn_probability * 100).toFixed(1);
+        document.getElementById('out-churn-prob').textContent = `Attrition Probability: ${riskPct}%`;
+        const bar = document.getElementById('out-churn-bar');
+        bar.style.width = riskPct + '%';
+        bar.className = 'h-2 rounded-full ' + (isChurn ? 'bg-red-500' : 'bg-green-500');
+      } catch (err) {
+        alert('Request failed: ' + err.message);
+      }
+    }
+
+    // Task 4: Sentiment
+    function setReview(txt) {
+      document.getElementById('i-review').value = txt;
+    }
+
+    async function predictSentiment() {
+      const text = document.getElementById('i-review').value.trim();
+      if (!text) {
+        alert('Please enter review text to analyze.');
+        return;
+      }
+      try {
+        const res = await fetch('/predict/sentiment', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ text })
+        });
+        const data = await res.json();
+        document.getElementById('result-sent-empty').classList.add('hidden');
+        document.getElementById('result-sent').classList.remove('hidden');
+
+        const labelEl = document.getElementById('out-sent-label');
+        labelEl.textContent = data.prediction;
+        if (data.prediction === 'positive') labelEl.className = 'text-2xl font-bold mb-2 text-green-600';
+        else if (data.prediction === 'negative') labelEl.className = 'text-2xl font-bold mb-2 text-red-600';
+        else labelEl.className = 'text-2xl font-bold mb-2 text-gray-700';
+
+        document.getElementById('out-sent-conf').textContent = `Confidence: ${(data.confidence * 100).toFixed(1)}%`;
+
+        let probs = '';
+        for (const [cls, p] of Object.entries(data.probabilities || {})) {
+          const pct = (p * 100).toFixed(1);
+          probs += `
+            <div class="text-xs">
+              <div class="flex justify-between text-gray-600 mb-0.5 capitalize"><span>${cls}</span><span>${pct}%</span></div>
+              <div class="w-full bg-gray-200 rounded-full h-1.5"><div class="bg-gray-700 h-1.5 rounded-full" style="width: ${pct}%"></div></div>
+            </div>`;
+        }
+        document.getElementById('out-sent-probs').innerHTML = probs;
+      } catch (err) {
+        alert('Request failed: ' + err.message);
+      }
+    }
+  </script>
+</body>
+</html>
