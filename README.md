@@ -124,13 +124,21 @@ Datheon_Machine_Learning_-_Data_Science_Internship/
 ## 💻 Local Setup & Execution
 
 ### 1. Prerequisites & Environment Setup
-Clone the repository and install required packages:
+Clone the repository:
 ```bash
 git clone https://github.com/albertcyriac04-lgtm/Datheon_Machine_Learning_-_Data_Science_Internship.git
 cd Datheon_Machine_Learning_-_Data_Science_Internship
-
-pip install -r requirements.txt
 ```
+
+Choose your setup:
+- **For Flask Web App & Vercel Deployment** (lightweight runtime, <15 MB):
+  ```bash
+  pip install -r requirements.txt
+  ```
+- **For Full Model Training & Running Notebooks** (includes Scikit-Learn, XGBoost, Matplotlib, Pandas):
+  ```bash
+  pip install -r requirements-dev.txt
+  ```
 
 ### 2. Running the Python Pipelines
 You can execute each pipeline script individually:
